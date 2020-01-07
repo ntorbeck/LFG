@@ -1,11 +1,11 @@
 # LFG
 Looking For Group is a web application designed to facilitate the creation of, and communication within, Dungeons and Dragons adventuring groups.  
-#### LFG's major features include:  
-  - An internal messaging system
-  - Campaign Browser
-  - Character and Campaign Management
-  - Campaign Creator
-  - Character Creator
+#### LFG's major features include:
+- An internal messaging system
+- Campaign Browser
+- Character and Campaign Management
+- Campaign Creator
+- Character Creator
 
 #### Images:
     Lfg logo, fail, and success pngs where designed by me.  
