@@ -21,8 +21,7 @@ Messages are only removed from the database if both the sender and receiver have
 - If only one has deleted the message, the message is hidden from the user that deleted it.
 
 After logging in, the homepage is set to the user's inbox.  
-There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.  
-
+There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.
 1. inbox.html
    - Shows a searchable, paginated table by using datatables.
    - Clicking on a table row allows you to view that message.
@@ -43,11 +42,11 @@ There is a mini navbar that allows you navigate between your inbox, sent message
      - Clicking reply opens compose.html with sender's username and original subject filled in.
 
 #### Campaign Browser:
-    The campaign browser shows you all campaigns the you are capable of joining.  
-    Hidden from view are any campaigns you have created or already joined, and any campaigns that have reached their maximum player limit.  
-      5)browse.html  
-        - Shows a searchable, paginated table.
-        - Clicking on a table row allows you to view that campaign's page.
+The campaign browser shows you all campaigns the you are capable of joining.  
+Hidden from view are any campaigns you have created or already joined, and any campaigns that have reached their maximum player limit.
+5. browse.html  
+   - Shows a searchable, paginated table.
+   - Clicking on a table row allows you to view that campaign's page.
 
 #### Character and Campaign Management:
     Each user can have up to 10 characters and 10 campaigns created at one time.  
