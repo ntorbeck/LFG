@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Your Characters
+{% endblock %}
+
+{% block main %}
+
+    <div class="btn-group mb-3" role="group" aria-label="Table Navigation">
+        <button type="button" class="btn btn-outline-info px-3 py-2 active" aria-label="Characters button" onclick="window.location='/characters'">Characters</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Campaigns button" onclick="window.location='/campaigns'">Campaigns</button>
+    </div>
+
+    <div class="text-left spacing">
+        <!-- https://getbootstrap.com/docs/4.1/content/tables/#responsive-tables -->
+        <!-- https://datatables.net/examples/basic_init/multi_col_sort.html -->
+        <div class="table-responsive dataTables_wrapper no-footer" id="DataTables_Char_Table_wrapper">
+            <!-- https://getbootstrap.com/docs/4.1/content/tables/ -->
+            <table class="table table-bordered table-hover dataTable no-footer" id="DataTables_Char_Table">
+                <thead class="thead-dark">
+                    <tr class="row_link">
+                        <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Class: activate to sort column ascending">Class</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Archetype: activate to sort column ascending">Archetype</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Multiclass: activate to sort column ascending">Multiclass</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Race: activate to sort column ascending">Race</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Subrace: activate to sort column ascending">Subrace</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Char_Table" rowspan="1" colspan="1" aria-label="Background: activate to sort column ascending">Background</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Modified from CS50 Week 7, 2019 Sandbox -->
+                    {% for char in characters %}
+                        <tr class="row_link" onclick="window.location='/char?char_id={{ char.char_id }}'" data-toggle="tooltip" data-placement="bottom" title="Click to view/edit">
+                            <td>{{ char.char_name }}</td>
+                            <td>{{ char.char_lvl }}</td>
+                            {% if char.multi == 'No' %}
+                                <td>{{ char.char_class }}</td>
+                            {% else %}
+                                <td>{{ char.char_class }} <span data-toggle="tooltip" data-placement="right" title="Class Level">({{ char.class_lvl }})</span></td>
+                            {% endif %}
+                            <td>{{ char.archetype }}</td>
+                            <td>{{ char.multi }}</td>
+                            <td>{{ char.race }}</td>
+                            <td>{{ char.subrace }}</td>
+                            <td>{{ char.bg }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modified from https://survey.cs50.net/sheet -->
+    <script>
+
+        $('table')['DataTable']({'info':!![],'ordering':!![],'paging':![],'searching':!![]});
+
+    </script>
+
+{% endblock %}

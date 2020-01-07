@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Compose
+{% endblock %}
+
+{% block main %}
+
+    <div class="btn-group mb-4" role="group" aria-label="Inbox Navigation">
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Inbox button" onclick="window.location='/'">Inbox</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Sent button" onclick="window.location='/sent'">Sent</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2 active" aria-label="Compose button" onclick="window.location='/compose'">Compose</button>
+    </div>
+
+    <div class="text-left">
+        <form action="/compose" method="post" class="needs-validation" novalidate>
+
+            <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+            <div class="row justify-content-lg-center mb-3">
+                <!-- http://getbootstrap.com/docs/4.1/components/forms/#form-controls -->
+                <div class="form-group col-lg-3 comp">
+                    <label for="to_user">To:</label>
+                    <input class="form-control" id="to_user" name="to_user" type="text" placeholder="Username" value="{{ to_user }}" maxlength="50" autofocus autocomplete="off" required>
+                    <div class="invalid-feedback relative">
+                        Please provide one username.
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-5">
+                    <input class="form-control" name="subject" type="text" maxlength="50" placeholder="Subject" value="{{ subject }}" aria-label="Subject" autocomplete="off" required>
+                    <div class="invalid-feedback relative">
+                        Please provide subject.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-lg-center">
+                <div class="form-group col-lg-8">
+                    <textarea class="form-control" name="message" maxlength="5000" rows="10" aria-label="Message" aria-describedby="messHelpText" autocomplete="off" required></textarea>
+                    <div class="invalid-feedback relative">
+                        Please provide message.
+                    </div>
+                    <small class="form-text text-muted text-right" id="messHelpText">5000 character limit.</small>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <div class="col"><p class="text-center"><button class="btn btn-info" type="submit">Send</button></p></div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        /* https://getbootstrap.com/docs/4.1/components/forms/#custom-styles */
+        /* Validates all individual text fields and select menus */
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+{% endblock %}

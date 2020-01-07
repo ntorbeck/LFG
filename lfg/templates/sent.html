@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sent Messages
+{% endblock %}
+
+{% block main %}
+
+    <div class="btn-group mb-3" role="group" aria-label="Inbox Navigation">
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Inbox button" onclick="window.location='/'">Inbox</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2 active" aria-label="Sent button" onclick="window.location='/sent'">Sent</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Compose button" onclick="window.location='/compose'">Compose</button>
+    </div>
+
+    <div class="text-left spacing">
+        <!-- https://getbootstrap.com/docs/4.1/content/tables/#responsive-tables -->
+        <!-- https://datatables.net/examples/basic_init/multi_col_sort.html -->
+        <div class="table-responsive dataTables_wrapper no-footer" id="DataTables_Sent_Table_wrapper">
+            <!-- https://getbootstrap.com/docs/4.1/content/tables/ -->
+            <table class="table table-hover dataTable no-footer borBot" id="DataTables_Sent_Table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="colCheck pl-2 pr-0">
+                            <div class="btn-group">
+                                <div class="btnCheck custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="selectAll"><label class="custom-control-label row_link align-text-top btnCheckPad" for="selectAll" onclick="selectAll()"></label>
+                                </div>
+                                <button type="button" class="btn btn-secondary btnTog dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <button class="dropdown-item" type="button" onclick="del()">Delete</button>
+                                </div>
+                            </div>
+                        </th>
+                        <th class="sorting row_link borRight" tabindex="0" aria-controls="DataTables_Sent_Table" rowspan="1" colspan="1" aria-label="To: activate to sort column ascending">To</th>
+                        <th class="sorting row_link borRight" tabindex="0" aria-controls="DataTables_Sent_Table" rowspan="1" colspan="1" aria-label="Subject: activate to sort column ascending">Subject</th>
+                        <th class="sorting_desc row_link" tabindex="0" aria-controls="DataTables_Sent_Table" rowspan="1" colspan="1" aria-sort="descending" aria-label="Sent: activate to sort column ascending">Sent</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Modified from CS50 Week 7, 2019 Sandbox -->
+                    {% for message in sent_messes %}
+                    <!-- https://stackoverflow.com/questions/17147821/how-to-make-a-whole-row-in-a-table-clickable-as-a-link -->
+                        <tr>
+                            <td class="colCheck">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input delCheck" id="{{ message.mess_id }}" name="delete" value="{{ message.mess_id }}">
+                                    <label class="custom-control-label row_link colCheckPad" for="{{ message.mess_id }}"></label>
+                                </div>
+                            </td>
+                            <td class="row_link borRight" onclick="window.location='/message?mess_id={{ message.mess_id }}'">{{ message.to_user }}</td>
+                            <td class="row_link borRight" onclick="window.location='/message?mess_id={{ message.mess_id }}'">{{ message.subject }}</td>
+                            <td class="row_link" onclick="window.location='/message?mess_id={{ message.mess_id }}'">{{ message.sent }}</td>
+                        </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modified from https://survey.cs50.net/sheet -->
+    <script>
+
+        $('table')['DataTable']({'info':!![],'ordering':!![],'paging':!![],'searching':!![], "order": [[ 3, "desc" ]], 'columnDefs': [{'targets': [0], 'orderable': false}] });
+
+    </script>
+    <script>
+        function del() {
+            var marked = false;
+            var allChecks = [];
+            $(".delCheck").each(function() {
+                var thisCheck = $(this);
+                if ($(thisCheck).is(":checked")) {
+                    marked = true;
+                    allChecks.push($(thisCheck).val());
+                }
+            });
+            if (marked === true) {
+                $.getJSON("/delete", {checked: allChecks},
+                function(data) {
+                    if (data === false) {
+                        alert("No boxes were checked.");
+                    } else {
+                        location.reload(true);
+                    }
+                });
+            } else {
+                alert("No boxes were checked.");
+            }
+        }
+
+        function selectAll() {
+            $(".delCheck").each(function() {
+                var allCheck = $(this);
+                if ($("#selectAll").is(":checked")) {
+                    allCheck.prop("checked", false);
+                } else {
+                    allCheck.prop("checked", true);
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

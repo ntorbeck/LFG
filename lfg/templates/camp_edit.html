@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ name }} (edit)
+{% endblock %}
+
+{% block main %}
+    <form action="/camp_edit" method="post" class="needs-validation" novalidate>
+    {% for camp in camp %}
+        <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+        <div class="row text-left justify-content-xl-center mb-4">
+            <div class="bg col-xl-8">
+                <div class="row spacing">
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Campaign Name:</u></b><span class="ml-2">{{ name }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Dungeon Master:</u></b><span class="ml-2">You</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl mb-4">
+                        <label for="setting" class="spacing"><b><u>Setting / Adventure:</u></b></label>
+                        <input class="form-control" id="setting" name="setting" type="text" value="{{ camp.setting }}" maxlength="50" required>
+                        <div class="invalid-feedback rel_select">
+                            Please provide setting / adventure.
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xl mb-4">
+                        <label for="max" class="spacing"><b><u>Player Count:</u></b></label>
+                        <input class="form-control" id="max" name="max" type="number" value="{{ camp.max }}" min="1" max="20" step="1">
+                        <div class="invalid-feedback relative">
+                            Range: 1-20
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl">
+                        <label for="freq" class="spacing"><b><u>Game Frequency:</u></b></label>
+                        <select class="custom-select" id="freq" name="freq">
+                            <option value="{{ camp.freq }}" selected>{{ camp.freq }} (Current)</option>
+                            <option value="TBD">To be determined</option>
+                            <option value="2/week">Twice a week</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Biweekly">Biweekly(every other)</option>
+                            <option value="2/month">Twice a month(e.g. 1st & 3rd Sat)</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Bimonthly">Bimonthy(every other)</option>
+                            <option value="Other">Other(fixed schedule)</option>
+                            <option value="Variable">Variable(changing schedule)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-xl">
+                        <label for="day" class="spacing"><b><u>Game Day:</u></b></label>
+                        <select class="custom-select" id="day" name="day">
+                            <option value="{{ camp.day }}" selected>{{ camp.day }} (Current)</option>
+                            <option value="TBD">To be determined</option>
+                            <option value="Monday">Monday</option>
+                            <option value="Tuesday">Tuesday</option>
+                            <option value="Wednesday">Wednesday</option>
+                            <option value="Thursday">Thursday</option>
+                            <option value="Friday">Friday</option>
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                            <option value="Multi-day">2 or more days a week</option>
+                            <option value="Variable">Variable(changing schedule)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col mb-4">
+                        <label for="time" class="spacing"><b><u>Game Time:</u></b></label>
+                        <input class="form-control" id="time" name="time" type="text" maxlength="8" value="{{ camp.time }}" autocomplete="off" pattern="(^[01]\d:[0-5]\d [AP]M)">
+                        <div class="invalid-feedback relative">
+                            Format: 00:00 AM/PM
+                        </div>
+                    </div>
+
+                    <div class="form-group col mb-4">
+                        <label for="zone" class="spacing"><b><u>Time Zone:</u></b></label>
+                        <input class="form-control" id="zone" name="zone" type="text" value="{{ camp.zone }}" maxlength="5" pattern="(^[a-zA-Z]{2,5})" required>
+                        <div class="invalid-feedback relative">
+                            Please provide time zone.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl">
+                        <label for="details" class="spacing"><b><u>Additional Details:</u></b></label>
+                        <textarea class="form-control" id="details" name="details" maxlength="1000" rows="5" aria-describedby="detailsHelpText" autocomplete="off" data-toggle="tooltip" data-placement="bottom" title="Click & drag bottom right corner to expand">{{ camp.details }}</textarea>
+                        <small class="form-text text-muted text-right" id="detailsHelpText">1000 character limit.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-auto">
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <button class="btn btn-info" type="submit" name="update" value="{{ camp.camp_id }}" aria-label="Update button">Update</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-secondary" type="button" onclick="window.location='/camp?camp_id={{ camp.camp_id }}'" aria-label="Cancel button">Cancel</button>
+            </div>
+        </div>
+    {% endfor %}
+    </form>
+
+    <script>
+        /* https://getbootstrap.com/docs/4.1/components/forms/#custom-styles */
+        /* Validates all individual text fields and select menus */
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+{% endblock %}

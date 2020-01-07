@@ -1,0 +1,326 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Character Creator
+{% endblock %}
+
+{% block main %}
+
+    <div class="row cs50">
+        <!-- https://getbootstrap.com/docs/4.1/components/alerts/ -->
+        <div class="alert alert-info mb-2">
+            <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
+            <h1 class="alert-heading mb-1">Character Creator</h1>
+            <div class="row text-left spac_sm mx-2">
+                &bull; Welcome to the character creator, you will be able to add more detailed information after completing this form.<br>
+                &bull; Each account has a limit of ten characters you can create. Each character can join one campaign.<br>
+                &bull; All text fields on this form have a max character limit of 30. If something is too long, try to shorten it in a meaningful way.
+            </div>
+        </div>
+    </div>
+
+    <div class="text-left">
+        <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
+        <form action="/char_gen" method="post" class="needs-validation" novalidate>
+
+            <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+            <div class="row justify-content-lg-center">
+                <!-- http://getbootstrap.com/docs/4.1/components/forms/#form-controls -->
+                <div class="form-group col-lg-4 mb-4">
+                    <label for="char_name" class="spacing">Character Name:</label>
+                    <input class="form-control" id="char_name" name="char_name" type="text" placeholder="Von Kith" maxlength="30" autofocus required>
+                    <!-- https://getbootstrap.com/docs/4.1/components/forms/#validation -->
+                    <div class="invalid-feedback relative">
+                        Please provide character name.
+                    </div>
+                </div>
+                <div class="form-group col-lg-4 mb-4">
+                    <label for="bg">Background:</label>
+                    <input class="form-control" id="bg" name="bg" type="text" placeholder="Criminal" maxlength="30" required>
+                    <div class="invalid-feedback relative">
+                        Please provide background.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="form-group mb-4">
+                    <label for="char_lvl" class="spacing">Character Level:</label>
+                    <input class="form-control" id="char_lvl" name="char_lvl" type="number" value="1" min="1" max="20" step="1">
+                    <div class="invalid-feedback relative">
+                        Range: 1-20
+                    </div>
+                </div>
+
+                <div class="form-group mx-4 mb-4">
+                    <label for="class_lvl" class="spacing">Class Level:</label>
+                    <input class="form-control" id="class_lvl" name="class_lvl" type="number" min="1" max="20" step="1">
+                    <div class="invalid-feedback relative">
+                        Range: 1-20
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="multi">Multiclass:</label><br>
+                    <!-- https://getbootstrap.com/docs/4.1/components/input-group/#custom-select -->
+                    <select class="custom-select" id="multi" name="multi">
+                        <option value="0" selected>No</option>
+                        <option value="1">Yes</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row justify-content-lg-center">
+                <div class="col-lg-4">
+                    <label for="class_select">Class:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="class_select" name="class" type="radio" value="class_select" aria-label="Radio button for following class select menu" checked>
+                            </div>
+                        </div>
+                        <select class="custom-select rounded-right require-if-active" name="class_select" aria-label="Class select menu for radio button" data-require-pair="#class_select">
+                            <option value="">Choose...</option>
+                            <option value="Barbarian">Barbarian</option>
+                            <option value="Bard">Bard</option>
+                            <option value="Cleric">Cleric</option>
+                            <option value="Druid">Druid</option>
+                            <option value="Fighter">Fighter</option>
+                            <option value="Monk">Monk</option>
+                            <option value="Paladin">Paladin</option>
+                            <option value="Ranger">Ranger</option>
+                            <option value="Rogue">Rogue</option>
+                            <option value="Sorcerer">Sorcerer</option>
+                            <option value="Warlock">Warlock</option>
+                            <option value="Wizard">Wizard</option>
+                        </select>
+                        <div class="invalid-feedback rel_select">
+                            Please choose class.
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="class_other" name="class" type="radio" value="class_other" aria-label="Radio button for following class text input">
+                            </div>
+                        </div>
+                        <input class="form-control rounded-right require-if-active" name="class_other" type="text" placeholder="Other..." maxlength="30" aria-label="Class text input for radio button" data-require-pair="#class_other">
+                        <div class="invalid-feedback rel_other">
+                            Please provide class.
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="archetype">Archetype:</label>
+                        <input class="form-control" id="archetype" name="archetype" type="text" placeholder="Champion" maxlength="30" aria-describedby="archetypeHelpText">
+                        <small class="form-text text-muted" id="archetypeHelpText">Input desired archetype if you have yet to select one.</small>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <label for="race_select">Race:</label>
+                    <!-- https://getbootstrap.com/docs/4.1/components/input-group/#checkboxes-and-radios -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="race_select" name="race" type="radio" value="race_select" aria-label="Radio button for following race select menu" checked>
+                            </div>
+                        </div>
+                        <!-- https://css-tricks.com/exposing-form-fields-radio-button-css/ -->
+                        <select class="custom-select rounded-right require-if-active" name="race_select" aria-label="Race select menu for radio button" data-require-pair="#race_select">
+                            <option value="">Choose...</option>
+                            <option value="Dragonborn">Dragonborn</option>
+                            <option value="Dwarf">Dwarf</option>
+                            <option value="Elf">Elf</option>
+                            <option value="Gnome">Gnome</option>
+                            <option value="Half-elf">Half-elf</option>
+                            <option value="Half-orc">Half-orc</option>
+                            <option value="Halfling">Halfling</option>
+                            <option value="Human">Human</option>
+                            <option value="Tiefling">Tiefling</option>
+                        </select>
+                        <div class="invalid-feedback rel_select">
+                            Please choose race.
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input id="race_other" name="race" type="radio" value="race_other" aria-label="Radio button for following race text input">
+                            </div>
+                        </div>
+                        <input class="form-control rounded-right require-if-active" name="race_other" type="text" placeholder="Other..." maxlength="30" aria-label="Race text input for radio button" data-require-pair="#race_other">
+                        <div class="invalid-feedback rel_other">
+                            Please provide race.
+                        </div>
+                    </div>
+
+                    <br>
+
+                    <div class="form-group">
+                        <label for="subrace">Subrace:</label>
+                        <input class="form-control" id="subrace" name="subrace" type="text" placeholder="Drow" maxlength="30" aria-describedby="subraceHelpText">
+                        <!-- https://getbootstrap.com/docs/4.1/components/forms/#help-text -->
+                        <small class="form-text text-muted" id="subraceHelpText">Leave blank if you do not have a subrace.</small>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-lg-center">
+                <div class="form-group col-lg-4 mb-4">
+                    <label for="style" class="spacing">Fighting Style:</label>
+                    <select class="custom-select" id="style" name="style" required>
+                        <option value="">Choose...</option>
+                        <option value="Beast Companion">Beast Companion: Go for the eyes Boo. GO FOR THE EYES!</option>
+                        <option value="Defensive">Defensive: Master Sword + Hylian Shield = Hero</option>
+                        <option value="Dual Wielding">Dual Wielding: Drizzt ain't got nothin' on me.</option>
+                        <option value="Duelist">Duelist(single, one-handed): My name is Inigo Montoya…</option>
+                        <option value="Great Weapon">Great Weapon(two-handed): Just call me Cloud.</option>
+                        <option value="Magic">Magic: I cast Magic Missile on the darkness.</option>
+                        <option value="Ranged">Ranged: Shooting arrows in knees since 4E 201.</option>
+                        <option value="Unarmed">Unarmed: Falcon Punch!</option>
+                    </select>
+                    <div class="invalid-feedback relative">
+                        Please choose fighting style.
+                    </div>
+                </div>
+
+                <div class="form-group col-lg-4 mb-4">
+                    <label for="weapon" class="spacing">Primary Weapon:</label>
+                    <select class="custom-select" id="weapon" name="weapon" required>
+                        <option value="">Choose...</option>
+                        <option value="Battleaxe">Battleaxe</option>
+                        <option value="Beast Companion">Beast Companion</option>
+                        <option value="Blowgun">Blowgun</option>
+                        <option value="Club">Club</option>
+                        <option value="Crossbow, Hand">Crossbow, Hand</option>
+                        <option value="Crossbow, Heavy">Crossbow, Heavy</option>
+                        <option value="Crossbow, Light">Crossbow, Light</option>
+                        <option value="Dagger">Dagger</option>
+                        <option value="Dart">Dart</option>
+                        <option value="Flail">Flail</option>
+                        <option value="Glaive">Glaive</option>
+                        <option value="Greataxe">Greataxe</option>
+                        <option value="Greatclub">Greatclub</option>
+                        <option value="Greatsword">Greatsword</option>
+                        <option value="Handaxe">Handaxe</option>
+                        <option value="Halberd">Halberd</option>
+                        <option value="Javelin">Javelin</option>
+                        <option value="Lance">Lance</option>
+                        <option value="Light Hammer">Light Hammer</option>
+                        <option value="Longbow">Longbow</option>
+                        <option value="Longsword">Longsword</option>
+                        <option value="Mace">Mace</option>
+                        <option value="Magic">Magic</option>
+                        <option value="Maul">Maul</option>
+                        <option value="Morningstar">Morningstar</option>
+                        <option value="Net">Net</option>
+                        <option value="Pike">Pike</option>
+                        <option value="Quarterstaff">Quarterstaff</option>
+                        <option value="Rapier">Rapier</option>
+                        <option value="Scimitar">Scimitar</option>
+                        <option value="Shortbow">Shortbow</option>
+                        <option value="Shortsword">Shortsword</option>
+                        <option value="Sickle">Sickle</option>
+                        <option value="Sling">Sling</option>
+                        <option value="Spear">Spear</option>
+                        <option value="Trident">Trident</option>
+                        <option value="War Pick">War Pick</option>
+                        <option value="Warhammer">Warhammer</option>
+                        <option value="Whip">Whip</option>
+                        <option value="Unarmed Strike">Unarmed Strike</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <div class="invalid-feedback relative">
+                        Please choose weapon.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-2">
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <button class="btn btn-info" type="submit" aria-label="Submit button">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        var level = {
+            start: function() {
+                this.setValue();
+                $("#char_lvl").on("change", this.setValue);
+            },
+
+            setValue: function() {
+                $("#class_lvl").val($("#char_lvl").val());
+            }
+        };
+
+        level.start();
+    </script>
+
+    <script>
+        /* https://css-tricks.com/exposing-form-fields-radio-button-css/ */
+        /* Validates all paired radio buttons & select menus/text fields */
+        var FormStuff = {
+
+            init: function() {
+                // kick it off once, in case the radio is already checked when the page loads
+                this.applyConditionalRequired();
+                this.bindUIActions();
+            },
+
+            bindUIActions: function() {
+                // when a radio or checkbox changes value, click or otherwise
+                $("input[type='radio'], input[type='checkbox']").on("change", this.applyConditionalRequired);
+            },
+
+            applyConditionalRequired: function() {
+                // find each input that may be hidden or not
+                $(".require-if-active").each(function() {
+                    var el = $(this);
+                    // find the pairing radio or checkbox
+                    if ($(el.data("require-pair")).is(":checked")) {
+                        // if its checked, the field should be required
+                        el.prop("required", true);
+                    } else {
+                        // otherwise it should not
+                        el.prop("required", false);
+                    }
+                });
+            }
+
+        };
+
+        FormStuff.init();
+    </script>
+
+    <script>
+        /* https://getbootstrap.com/docs/4.1/components/forms/#custom-styles */
+        /* Validates all individual text fields and select menus */
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+{% endblock %}

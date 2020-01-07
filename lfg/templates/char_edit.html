@@ -1,0 +1,246 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ name }} (edit)
+{% endblock %}
+
+{% block main %}
+    <form action="/char_edit" method="post" class="needs-validation" novalidate>
+    {% for char in char %}
+        <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+        <div class="row text-left justify-content-xl-center mb-4">
+            <div class="bg col-xl-8">
+                <div class="row spacing">
+                    <div class="col-xl mb-2">
+                        <b><u>Name:</u></b><span class="ml-2">{{ name }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b><u>Player:</u></b><span class="ml-1">You</span>
+                    </div>
+                </div>
+
+                <div class="row spacing">
+                    <div class="col-xl mb-2">
+                        <b><u>Background:</u></b><span class="ml-2">{{ char.bg }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b><u>Campaign:</u></b>
+                        <span class="ml-1">
+                            {% if not camp == None %}
+                                {{ camp.camp_name }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row spacing">
+                    <div class="col-xl mb-2">
+                        <b><u>Race:</u></b><span class="ml-2">{{ char.race }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b><u>Subrace:</u></b><span class="ml-2">{{ char.subrace }}</span>
+                    </div>
+                </div>
+
+                <div class="row pl-3">
+                    <div class="form-group pr-3 mb-4">
+                        <label for="char_lvl" class="spacing"><b><u>Character Level:</u></b></label>
+                        <input class="form-control" id="char_lvl" name="char_lvl" type="number" value="{{ char.char_lvl }}" min="1" max="20" step="1">
+                        <div class="invalid-feedback relative">
+                            Range: 1-20
+                        </div>
+                    </div>
+
+                    <div class="form-group pr-3 mb-4">
+                        <label for="class_lvl" class="spacing"><b><u>Class Level:</u></b></label>
+                        <input class="form-control" id="class_lvl" name="class_lvl" type="number" value="{{ char.class_lvl }}" min="1" max="20" step="1">
+                        <div class="invalid-feedback relative">
+                            Range: 1-20
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="multi"><b><u>Multiclass:</u></b></label><br>
+                        <!-- https://getbootstrap.com/docs/4.1/components/input-group/#custom-select -->
+                        {% if char.multi == 0 %}
+                            <select class="custom-select" id="multi" name="multi">
+                                <option value="0" selected>No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        {% else %}
+                            <select class="custom-select" id="multi" name="multi">
+                                <option value="0">No</option>
+                                <option value="1" selected>Yes</option>
+                            </select>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl mb-1">
+                        <label for="char_class"><b><u>Class:</u></b></label>
+                        <input class="form-control" id="char_class" name="char_class" type="text" value="{{ char.char_class }}" maxlength="30" aria-describedby="classHelpText" required>
+                        <div class="invalid-feedback rel_select">Please provide class.</div>
+                        <small class="form-text text-muted" id="classHelpText">Only change if multiclass level exceeds original class level.</small>
+                    </div>
+
+                    <div class="form-group col-xl mb-1">
+                        <label for="archetype"><b><u>Archetype:</u></b></label>
+                        <input class="form-control" id="archetype" name="archetype" type="text" value="{{ char.archetype }}" maxlength="30" aria-describedby="archetypeHelpText">
+                        <small class="form-text text-muted" id="archetypeHelpText">Input desired archetype if you have yet to select one.</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl">
+                        <label for="style" class="spacing"><b><u>Fighting Style:</u></b></label>
+                        <select class="custom-select" id="style" name="style">
+                            <option value="{{ char.style }}" selected>{{ char.style }} (Current)</option>
+                            <option value="Beast Companion">Beast Companion: Go for the eyes Boo. GO FOR THE EYES!</option>
+                            <option value="Defensive">Defensive: Master Sword + Hylian Shield = Hero</option>
+                            <option value="Dual Wielding">Dual Wielding: Drizzt ain't got nothin' on me.</option>
+                            <option value="Duelist">Duelist(single, one-handed): My name is Inigo Montoya…</option>
+                            <option value="Great Weapon">Great Weapon(two-handed): Just call me Cloud.</option>
+                            <option value="Magic">Magic: I cast Magic Missile on the darkness.</option>
+                            <option value="Ranged">Ranged: Shooting arrows in knees since 4E 201.</option>
+                            <option value="Unarmed">Unarmed: Falcon Punch!</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group col-xl">
+                        <label for="weapon" class="spacing"><b><u>Primary Weapon:</u></b></label>
+                        <select class="custom-select" id="weapon" name="weapon">
+                            <option value="{{ char.weapon }}" selected>{{ char.weapon }} (Current)</option>
+                            <option value="Battleaxe">Battleaxe</option>
+                            <option value="Beast Companion">Beast Companion</option>
+                            <option value="Blowgun">Blowgun</option>
+                            <option value="Club">Club</option>
+                            <option value="Crossbow, Hand">Crossbow, Hand</option>
+                            <option value="Crossbow, Heavy">Crossbow, Heavy</option>
+                            <option value="Crossbow, Light">Crossbow, Light</option>
+                            <option value="Dagger">Dagger</option>
+                            <option value="Dart">Dart</option>
+                            <option value="Flail">Flail</option>
+                            <option value="Glaive">Glaive</option>
+                            <option value="Greataxe">Greataxe</option>
+                            <option value="Greatclub">Greatclub</option>
+                            <option value="Greatsword">Greatsword</option>
+                            <option value="Handaxe">Handaxe</option>
+                            <option value="Halberd">Halberd</option>
+                            <option value="Javelin">Javelin</option>
+                            <option value="Lance">Lance</option>
+                            <option value="Light Hammer">Light Hammer</option>
+                            <option value="Longbow">Longbow</option>
+                            <option value="Longsword">Longsword</option>
+                            <option value="Mace">Mace</option>
+                            <option value="Magic">Magic</option>
+                            <option value="Maul">Maul</option>
+                            <option value="Morningstar">Morningstar</option>
+                            <option value="Net">Net</option>
+                            <option value="Pike">Pike</option>
+                            <option value="Quarterstaff">Quarterstaff</option>
+                            <option value="Rapier">Rapier</option>
+                            <option value="Scimitar">Scimitar</option>
+                            <option value="Shortbow">Shortbow</option>
+                            <option value="Shortsword">Shortsword</option>
+                            <option value="Sickle">Sickle</option>
+                            <option value="Sling">Sling</option>
+                            <option value="Spear">Spear</option>
+                            <option value="Trident">Trident</option>
+                            <option value="War Pick">War Pick</option>
+                            <option value="Warhammer">Warhammer</option>
+                            <option value="Whip">Whip</option>
+                            <option value="Unarmed Strike">Unarmed Strike</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl mb-0">
+                        <label for="multi_info" class="spacing"><b><u>Multiclass Information:</u></b></label>
+                        <textarea class="form-control" id="multi_info" name="multi_info" maxlength="1000" aria-describedby="infoHelpText" autocomplete="off" data-toggle="tooltip" data-placement="bottom" title="Click & drag bottom right corner to expand">{{ char.multi_info }}</textarea>
+                        <small class="form-text text-muted text-right" id="infoHelpText">1000 character limit.</small>
+                    </div>
+
+                    <div class="form-group col-xl mb-0">
+                        <label for="magic_items" class="spacing"><b><u>Magic Items:</u></b></label>
+                        <textarea class="form-control" id="magic_items" name="magic_items" maxlength="1000" aria-describedby="itemsHelpText" autocomplete="off" data-toggle="tooltip" data-placement="bottom" title="Click & drag bottom right corner to expand">{{ char.magic_items }}</textarea>
+                        <small class="form-text text-muted text-right" id="itemsHelpText">1000 character limit.</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl mb-0">
+                        <label for="notes" class="spacing"><b><u>Description:</u></b></label>
+                        <textarea class="form-control" id="notes" name="notes" maxlength="1000" aria-describedby="notesHelpText" autocomplete="off" data-toggle="tooltip" data-placement="bottom" title="Click & drag bottom right corner to expand">{{ char.notes }}</textarea>
+                        <small class="form-text text-muted text-right" id="notesHelpText">1000 character limit.</small>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xl mb-0">
+                        <label for="bs" class="spacing"><b><u>Backstory:</u></b> <small class="text-muted" id="bstopHelpText">Only visible to the player and their dm.</small></label>
+                        <textarea class="form-control" id="bs" name="bs" maxlength="5000" aria-describedby="bsHelpText" autocomplete="off" data-toggle="tooltip" data-placement="bottom" title="Click & drag bottom right corner to expand">{{ char.bs }}</textarea>
+                        <small class="form-text text-muted text-right" id="bsHelpText">5000 character limit.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-2">
+            <div class="col-auto">
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <button class="btn btn-info" type="submit" name="update" value="{{ char.char_id }}" aria-label="Update button">Update</button>
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-secondary" type="button" onclick="window.location='/char?char_id={{ char.char_id }}'" aria-label="Cancel button">Cancel</button>
+            </div>
+        </div>
+
+    {% endfor %}
+    </form>
+
+    <script>
+        var level = {
+            start: function() {
+                if ($("#multi").val() === "0") {
+                    this.setValue();
+                    $("#char_lvl").on("change", this.setValue);
+                }
+            },
+
+            setValue: function() {
+                $("#class_lvl").val($("#char_lvl").val());
+            }
+        };
+
+        level.start();
+    </script>
+
+    <script>
+        /* https://getbootstrap.com/docs/4.1/components/forms/#custom-styles */
+        /* Validates all individual text fields and select menus */
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                    form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+{% endblock %}

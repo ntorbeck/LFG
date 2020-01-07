@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Message
+{% endblock %}
+
+{% block main %}
+
+    <div class="btn-group mb-4" role="group" aria-label="Inbox Navigation">
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Inbox button" onclick="window.location='/'">Inbox</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Sent button" onclick="window.location='/sent'">Sent</button>
+        <button type="button" class="btn btn-outline-info px-3 py-2" aria-label="Compose button" onclick="window.location='/compose'">Compose</button>
+    </div>
+
+    {% for mess in mess %}
+        <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+        <div class="row text-left spacing justify-content-lg-center mb-4">
+            <div class="bg col-lg-8">
+                <div class="row">
+                    <div class="col-lg mb-2">
+                        <b><u>To:</u></b><span class="ml-2">{{ mess.to_user }}</span>
+                    </div>
+
+                    <div class="col-lg mb-2">
+                        <b><u>From:</u></b><span class="ml-2">{{ mess.from_user }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg mb-2">
+                        <b><u>Subject:</u></b><span class="ml-2">{{ mess.subject }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg">
+                        <span class="wtspace">{{ mess.message }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            {% if show_reply %}
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <div class="col-auto">
+                    <button class="btn btn-success" type="button" onclick="window.location='/reply?to_user={{ mess.from_user }}&subject={{ mess.subject }}'" aria-label="Reply button">Reply</button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-danger" type="button" id="to_del" value="{{ mess.mess_id }}" onclick="to_del()" aria-label="Delete button">Delete</button>
+                </div>
+            {% else %}
+                <div class="col-auto">
+                    <button class="btn btn-danger" type="button" id="from_del" value="{{ mess.mess_id }}" onclick="from_del()" aria-label="Delete button">Delete</button>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <script>
+        function to_del() {
+            var allChecks = [$('#to_del').val()];
+            $.getJSON("/delete", {checked: allChecks},
+            function(data) {
+                if (data === false) {
+                    alert("You have already deleted this message.");
+                } else {
+                    window.location='/';
+                }
+            });
+        }
+
+        function from_del() {
+            var allChecks = [$('#from_del').val()];
+            $.getJSON("/delete", {checked: allChecks},
+            function(data) {
+                if (data === false) {
+                    alert("You have already deleted this message.");
+                } else {
+                    window.location='/sent';
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

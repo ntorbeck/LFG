@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ name }}
+{% endblock %}
+
+{% block main %}
+
+    {% for camp in camp %}
+        <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+        <div class="row justify-content-center mb-4">
+            {% if show_dm %}
+                <div class="col-auto">
+                    <button class="btn btn-success" type="button" onclick="window.location='/camp_edit?camp_id={{ camp.camp_id }}'" aria-label="Edit button">Edit</button>
+                </div>
+                <div class="col-auto">
+                    <form action="/del_camp" method="post">
+                        <button class="btn btn-danger" type="submit" name="delete" value="{{ camp.camp_id }}" aria-label="Delete button">Delete</button>
+                    </form>
+                </div>
+            {% elif show_player %}
+                <div class="col-auto">
+                    <form action="/leave" method="post">
+                        <button class="btn btn-danger" type="submit" name="leave" value="{{ camp.camp_id }}" aria-label="Leave button" data-toggle="tooltip" data-placement="bottom" title="Removes your character from campaign">
+                            Leave
+                        </button>
+                    </form>
+                </div>
+            {% elif camp.players < camp.max %}
+                <div class="col-auto">
+                    <button class="btn btn-info" type="button" onclick="window.location='/join?camp_id={{ camp.camp_id }}'" aria-label="Join button">Join</button>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+        <div class="row text-left spacing justify-content-xl-center mb-3">
+            <div class="bg col-xl-8">
+                <div class="row">
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Campaign Name:</u></b><span class="ml-2">{{ name }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Dungeon Master:</u></b>
+                        <span class="ml-1">
+                            {% if show_dm %}
+                                You
+                            {% else %}
+                                <a href="/reply?to_user={{ camp.username }}&subject=" data-toggle="tooltip" data-placement="right" title="Click to message">{{ camp.username }}</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl mb-2">
+                        <b><u>Setting:</u></b><span class="ml-2">{{ camp.setting }}</span>
+                    </div>
+
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Player Count:</u></b><span class="ml-2">{{ camp.players }}/{{ camp.max }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl mb-2">
+                        <b class="text-nowrap"><u>Game Time:</u></b><span class="ml-2">{{ camp.freq }} on {{ camp.day }} at {{ camp.time }} {{ camp.zone }}</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl">
+                        <b><u>Additional Details:</u></b><br>
+                        <span class="wtspace">{{ camp.details }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-left spacing">
+            <!-- https://getbootstrap.com/docs/4.1/content/tables/#responsive-tables -->
+            <!-- https://datatables.net/examples/basic_init/multi_col_sort.html -->
+            <div class="table-responsive dataTables_wrapper no-footer" id="DataTables_CC_Table_wrapper">
+                <!-- https://getbootstrap.com/docs/4.1/content/tables/ -->
+                <table class="table table-bordered table-hover dataTable no-footer" id="DataTables_CC_Table">
+                    <thead class="thead-dark">
+                        <tr class="row_link">
+                            <th class="sorting_asc" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Name</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Level: activate to sort column ascending">Level</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Class: activate to sort column ascending">Class</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Archetype: activate to sort column ascending">Archetype</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Multiclass: activate to sort column ascending">Multiclass</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Race: activate to sort column ascending">Race</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Subrace: activate to sort column ascending">Subrace</th>
+                            <th class="sorting" tabindex="0" aria-controls="DataTables_CC_Table" rowspan="1" colspan="1" aria-label="Background: activate to sort column ascending">Background</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <!-- Modified from CS50 Week 7, 2019 Sandbox -->
+                        {% for char in chars %}
+                            {% if show_dm %}
+                            <tr class="row_link" onclick="window.location='/char?char_id={{ char.char_id }}'" data-toggle="tooltip" data-placement="bottom" title="Click to view/remove">
+                            {% else %}
+                            <tr class="row_link" onclick="window.location='/char?char_id={{ char.char_id }}'" data-toggle="tooltip" data-placement="bottom" title="Click to view">
+                            {% endif %}
+                                <td>{{ char.char_name }}</td>
+                                <td>{{ char.char_lvl }}</td>
+                                {% if char.multi == 'No' %}
+                                    <td>{{ char.char_class }}</td>
+                                {% else %}
+                                    <td>{{ char.char_class }} <span data-toggle="tooltip" data-placement="right" title="Class Level">({{ char.class_lvl }})</span></td>
+                                {% endif %}
+                                <td>{{ char.archetype }}</td>
+                                <td>{{ char.multi }}</td>
+                                <td>{{ char.race }}</td>
+                                <td>{{ char.subrace }}</td>
+                                <td>{{ char.bg }}</td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endfor %}
+
+    <!-- Modified from https://survey.cs50.net/sheet -->
+    <script>
+
+        $('table')['DataTable']({'info':!![],'ordering':!![],'paging':!![],'searching':!![]});
+
+    </script>
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ name }}
+{% endblock %}
+
+{% block main %}
+
+    {% for char in char %}
+
+            {% if show_me %}
+                <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+                <div class="row justify-content-center mb-4">
+                    <div class="col-auto">
+                        <button class="btn btn-success" type="button" onclick="window.location='/char_edit?char_id={{ char.char_id }}'" aria-label="Edit button">Edit</button>
+                    </div>
+                    <div class="col-auto">
+                        <form action="/del_char" method="post">
+                            <button class="btn btn-danger" type="submit" name="delete" value="{{ char.char_id }}" aria-label="Delete button">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% elif show_remove %}
+                <div class="row justify-content-center mb-4">
+                    <div class="col-auto">
+                        <form action="/leave" method="post">
+                            <button class="btn btn-danger" type="submit" name="leave" value="{{ char.camp_id }}" aria-label="Leave button" data-toggle="tooltip" data-placement="bottom" title="Removes character from campaign">
+                                Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% endif %}
+
+            <!-- http://getbootstrap.com/docs/4.1/layout/grid/ -->
+            <div class="row text-left spacing justify-content-xl-center mb-4">
+                <div class="bg col-xl-8">
+                    <div class="row">
+                        <div class="col-xl mb-2">
+                            <b><u>Name:</u></b><span class="ml-2">{{ name }}</span>
+                        </div>
+
+                        <div class="col-xl mb-2">
+                            <b><u>Player:</u></b>
+                            <span class="ml-1">
+                                {% if show_me %}
+                                    You
+                                {% else %}
+                                    <a href="/reply?to_user={{ char.username }}&subject=" data-toggle="tooltip" data-placement="right" title="Click to message">{{ char.username }}</a>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl mb-2">
+                            <b><u>Background:</u></b><span class="ml-2">{{ char.bg }}</span>
+                        </div>
+
+                        <div class="col-xl mb-2">
+                            <b><u>Campaign:</u></b>
+                            <span class="ml-1">
+                                {% if not camp == None %}
+                                    {% for camp in camp %}
+                                        <a href="/camp?camp_id={{ char.camp_id }}" data-toggle="tooltip" data-placement="right" title="Click to view">{{ camp.camp_name }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl mb-2">
+                            <b><u>Race:</u></b><span class="ml-2">{{ char.race }}</span>
+                        </div>
+
+                        <div class="col-xl mb-2">
+                            <b><u>Subrace:</u></b><span class="ml-2">{{ char.subrace }}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-auto mb-2">
+                                    <b><u>Level:</u></b><span class="ml-2">{{ char.char_lvl }}</span>
+                                </div>
+
+                                <div class="col-auto mb-2">
+                                    <b><u>Class:</u></b>
+                                    <span class="ml-1">
+                                        {% if char.multi == 0 %}
+                                            {{ char.char_class }}
+                                        {% else %}
+                                            {{ char.char_class }} <span data-toggle="tooltip" data-placement="right" title="Class Level">({{ char.class_lvl }})</span>
+                                        {% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl mb-2">
+                            <b><u>Archetype:</u></b><span class="ml-2">{{ char.archetype }}</span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl mb-2">
+                            <b class="text-nowrap"><u>Fighting Style:</u></b><span class="ml-2">{{ char.style }}</span>
+                        </div>
+
+                        <div class="col-xl mb-2">
+                            <b class="text-nowrap"><u>Primary Weapon:</u></b><span class="ml-2">{{ char.weapon }}</span>
+                        </div>
+                    </div>
+
+                    {% if char.multi == 0 %}
+                        <div class="row">
+                            <div class="col-xl mb-2">
+                                <b><u>Magic Items:</u></b><br>
+                                {{ char.magic_items }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="row">
+                            <div class="col-xl mb-2">
+                                <b><u>Multiclass Information:</u></b><br>
+                                <span class="wtspace">{{ char.multi_info }}</span>
+                            </div>
+
+                            <div class="col-xl mb-2">
+                                <b><u>Magic Items:</u></b><br>
+                                <span class="wtspace">{{ char.magic_items }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-xl">
+                            <b><u>Description:</u></b><br>
+                            <span class="wtspace">{{ char.notes }}</span>
+                        </div>
+                    </div>
+
+                    {% if show_bs %}
+                        <div class="row">
+                            <div class="col-xl mt-2">
+                                <b><u>Backstory:</u></b><br>
+                                <span class="wtspace">{{ char.bs }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+    {% endfor %}
+
+{% endblock %}
