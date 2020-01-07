@@ -8,9 +8,9 @@ Looking For Group is a web application designed to facilitate the creation of, a
 - Character Creator
 
 #### Images:
-    Lfg logo, fail, and success pngs where designed by me.  
-    I used https://favicon.io/favicon-converter/ to create the favicon.ico.  
-    Table sorting arrows are from https://github.com/DataTables/DataTables/tree/master/media/images.
+   Lfg logo, fail, and success pngs where designed by me.  
+   I used https://favicon.io/favicon-converter/ to create the favicon.ico.  
+   Table sorting arrows are from https://github.com/DataTables/DataTables/tree/master/media/images.
 
 #### CSS:
     I used https://bootswatch.com/darkly/ as a base and modified parts to suit my aesthetic.
