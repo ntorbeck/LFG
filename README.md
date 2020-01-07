@@ -44,6 +44,7 @@ There is a mini navbar that allows you navigate between your inbox, sent message
 #### Campaign Browser:
 The campaign browser shows you all campaigns the you are capable of joining.  
 Hidden from view are any campaigns you have created or already joined, and any campaigns that have reached their maximum player limit.
+
 5. browse.html
    - Shows a searchable, paginated table.
    - Clicking on a table row allows you to view that campaign's page.
@@ -52,6 +53,7 @@ Hidden from view are any campaigns you have created or already joined, and any c
 Each user can have up to 10 characters and 10 campaigns created at one time.  
 You have the ability to edit these assets after creation and delete any assets you no longer need.  
 By deleting assets you can free up slots for creating new ones.
+
 6. camp.html
    - Shows you all the information for a campaign, including a table showing any characters that have already joined.
    - This table is searchable and paginated.
