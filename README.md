@@ -29,6 +29,7 @@ Messages are only removed from the database if both the sender and receiver have
 
 After logging in, the homepage is set to the user's inbox.  
 There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.
+
 3. inbox.html
    - Shows a searchable, paginated table by using datatables.
    - Clicking on a table row allows you to view that message.
