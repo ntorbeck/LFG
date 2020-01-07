@@ -17,10 +17,11 @@ I used https://bootswatch.com/darkly/ as a base and modified parts to suit my ae
 
 #### Internal Messaging:
 The internal messaging system works like a simplier version of email.  
-After logging in, the homepage is set to the user's inbox.  
-There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.  
 Messages are only removed from the database if both the sender and receiver have decided to delete the message.  
 - If only one has deleted the message, the message is hidden from the user that deleted it.
+
+After logging in, the homepage is set to the user's inbox.  
+There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.  
 
 1. inbox.html
    - Shows a searchable, paginated table by using datatables.
