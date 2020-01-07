@@ -88,7 +88,7 @@ By deleting assets you can free up slots for creating new ones.
 
 #### Campaign Creator:
 10. camp_gen.html
-    - Modified from Survey, uses SQLite for the database instead of CSV.
+    - Modified from my CS50 Survey project, uses SQLite for the database instead of CSV.
     - Shows a simple form asking for information about your campaign.
     - By creating a campaign, you are set as its Dungeon Master, giving you special privileges.
       - As dm you can see the backstories of any characters that join your campaign(if one is provided).
@@ -102,7 +102,7 @@ By deleting assets you can free up slots for creating new ones.
 
 #### Character Creator:
 12. char_gen.html
-    - Modified from Survey, uses SQLite for the database.
+    - Modified from my CS50 Survey project, uses SQLite for the database.
     - Shows a form that allows you to quickly create a character.
       - It currently only supports 5th edition characters.
     - Clicking submit inserts your character into the characters table(if you have provided all required information).
