@@ -29,7 +29,9 @@
                         <b><u>Campaign:</u></b>
                         <span class="ml-1">
                             {% if not camp == None %}
-                                {{ camp.camp_name }}
+                                {% for camp in camp %}
+                                    {{ camp.camp_name }}
+                                {% endfor %}
                             {% endif %}
                         </span>
                     </div>
