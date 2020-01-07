@@ -17,28 +17,29 @@ I used https://bootswatch.com/darkly/ as a base and modified parts to suit my ae
 
 #### Internal Messaging:
 The internal messaging system works like a simplier version of email.  
-Messages are only removed from the database if both the sender and receiver have decided to delete the message.  
-- If only one has deleted the message, the message is hidden from the user that deleted it.
 After logging in, the homepage is set to the user's inbox.  
 There is a mini navbar that allows you navigate between your inbox, sent messages, and the message composition page.  
-      1)inbox.html  
-        - Shows a searchable, paginated table by using datatables.
-        - Clicking on a table row allows you to view that message.
-        - Read and unread messages show visual difference.
-        - You can mark multiple messages as read or unread, and delete multiple messages at once using checkboxes.  
-      2)sent.html  
-        - Shows a searchable, paginated table.
-        - Clicking on a table row allows you to view that message.
-        - You can delete multiple messages at once using checkboxes.  
-      3)compose.html  
-        - Shows a form that allows you to send an up to 5000 character message to a single user at a time.
-        - Clicking send inserts your message into the messages table...  
-          + Only if the "To" field contains a valid username and you have provided a subject and message.  
-      4)message.html  
-        - Shows sender and receiver username, subject, and message.
-        - Clicking delete button will remove the message from your inbox/sent messages.
-        - Shows reply button only if you are the receiver of the message.  
-          + Clicking reply opens compose.html with sender's username and original subject filled in.
+Messages are only removed from the database if both the sender and receiver have decided to delete the message.  
+- If only one has deleted the message, the message is hidden from the user that deleted it.
+
+1. inbox.html
+   - Shows a searchable, paginated table by using datatables.
+   - Clicking on a table row allows you to view that message.
+   - Read and unread messages show visual difference.
+   - You can mark multiple messages as read or unread, and delete multiple messages at once using checkboxes.
+2. sent.html
+   - Shows a searchable, paginated table.
+   - Clicking on a table row allows you to view that message.
+   - You can delete multiple messages at once using checkboxes.
+3. compose.html
+   - Shows a form that allows you to send an up to 5000 character message to a single user at a time.
+   - Clicking send inserts your message into the messages table...
+     - Only if the "To" field contains a valid username and you have provided a subject and message.
+4. message.html
+   - Shows sender and receiver username, subject, and message.
+   - Clicking delete button will remove the message from your inbox/sent messages.
+   - Shows reply button only if you are the receiver of the message.
+     - Clicking reply opens compose.html with sender's username and original subject filled in.
 
 #### Campaign Browser:
     The campaign browser shows you all campaigns the you are capable of joining.  
