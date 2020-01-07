@@ -1,21 +1,21 @@
 # LFG
 Looking For Group is a web application designed to facilitate the creation of, and communication within, Dungeons and Dragons adventuring groups.  
-LFG's major features include:  
+#### LFG's major features include:  
   - An internal messaging system
   - Campaign Browser
   - Character and Campaign Management
   - Campaign Creator
   - Character Creator
 
-Images:  
+#### Images:
     Lfg logo, fail, and success pngs where designed by me.  
     I used https://favicon.io/favicon-converter/ to create the favicon.ico.  
     Table sorting arrows are from https://github.com/DataTables/DataTables/tree/master/media/images.
 
-CSS:  
+#### CSS:
     I used https://bootswatch.com/darkly/ as a base and modified parts to suit my aesthetic.
 
-Internal Messaging:  
+#### Internal Messaging:
     The internal messaging system works like a simplier version of email.  
     Messages are only removed from the database if both the sender and receiver have decided to delete the message.  
         If only one has deleted the message, the message is hidden from the user that deleted it.  
@@ -40,14 +40,14 @@ Internal Messaging:
         - Shows reply button only if you are the receiver of the message.  
           + Clicking reply opens compose.html with sender's username and original subject filled in.
 
-Campaign Browser:  
+#### Campaign Browser:
     The campaign browser shows you all campaigns the you are capable of joining.  
     Hidden from view are any campaigns you have created or already joined, and any campaigns that have reached their maximum player limit.  
       5)browse.html  
         - Shows a searchable, paginated table.
         - Clicking on a table row allows you to view that campaign's page.
 
-Character and Campaign Management:  
+#### Character and Campaign Management:
     Each user can have up to 10 characters and 10 campaigns created at one time.  
     You have the ability to edit these assets after creation and delete any assets you no longer need.  
     By deleting assets you can free up slots for creating new ones.  
@@ -83,7 +83,7 @@ Character and Campaign Management:
         - Clicking update will resubmit your caharacter to the database, making any changes.
         - Clicking cancel will return you to char.html without touching the database.
 
-Campaign Creator:  
+#### Campaign Creator:
   10)camp_gen.html  
     - Modified from Survey, uses SQLite for the database instead of CSV.
     - Shows a simple form asking for information about your campaign.
@@ -97,7 +97,7 @@ Campaign Creator:
     - This table is searchable and paginated.
     - Clicking on a row will take you to that campaign's page.
 
-Character Creator:  
+#### Character Creator:
   12)char_gen.html  
     - Modified from Survey, uses SQLite for the database.
     - Shows a form that allows you to quickly create a character.  
@@ -109,7 +109,7 @@ Character Creator:
     - This table is searchable and paginated.
     - Clicking on a row will take you to that character's page.
 
-Additional Pages:  
+#### Additional Pages:
   14)error.html  
     - Modified from Survey.
     - Shows error code, a bulleted list of errors, and lfg_fail.png.  
@@ -125,7 +125,7 @@ Additional Pages:
   17)register.html  
     - From CS50 Finance, allows user to create an account.
 
-helpers.py:  
+#### helpers.py:
   a)datetime_convert  
     - Converts date timestamps to a more readable format.
   b)login_required  
