@@ -85,51 +85,51 @@ Looking For Group is a web application designed to facilitate the creation of, a
 
 #### Campaign Creator:
   10)camp_gen.html  
-    - Modified from Survey, uses SQLite for the database instead of CSV.
-    - Shows a simple form asking for information about your campaign.
-    - By creating a campaign, you are set as its Dungeon Master, giving you special privileges.  
-      + As dm you can see the backstories of any characters that join your campaign(if one is provided).
-      + You can remove any characters from your campaign by visiting their character page.  
-    - Clicking submit inserts your campaign into the campaigns table(if you have provided all required information).
-    - After submission you are redirected to campaigns.html.  
+     - Modified from Survey, uses SQLite for the database instead of CSV.
+     - Shows a simple form asking for information about your campaign.
+     - By creating a campaign, you are set as its Dungeon Master, giving you special privileges.  
+        + As dm you can see the backstories of any characters that join your campaign(if one is provided).
+        + You can remove any characters from your campaign by visiting their character page.  
+     - Clicking submit inserts your campaign into the campaigns table(if you have provided all required information).
+     - After submission you are redirected to campaigns.html.  
   11)campaigns.html  
-    - Shows a table containing all the campaigns you have created or joined with one of your characters.
-    - This table is searchable and paginated.
-    - Clicking on a row will take you to that campaign's page.
+     - Shows a table containing all the campaigns you have created or joined with one of your characters.
+     - This table is searchable and paginated.
+     - Clicking on a row will take you to that campaign's page.
 
 #### Character Creator:
   12)char_gen.html  
-    - Modified from Survey, uses SQLite for the database.
-    - Shows a form that allows you to quickly create a character.  
-      + It currently only supports 5th edition characters.  
-    - Clicking submit inserts your character into the characters table(if you have provided all required information).
-    - After submission you are redirected to characters.html.  
+     - Modified from Survey, uses SQLite for the database.
+     - Shows a form that allows you to quickly create a character.  
+        + It currently only supports 5th edition characters.  
+     - Clicking submit inserts your character into the characters table(if you have provided all required information).
+     - After submission you are redirected to characters.html.  
   13)characters.html  
-    - Shows a table containing all your characters.
-    - This table is searchable and paginated.
-    - Clicking on a row will take you to that character's page.
+     - Shows a table containing all your characters.
+     - This table is searchable and paginated.
+     - Clicking on a row will take you to that character's page.
 
 #### Additional Pages:
   14)error.html  
-    - Modified from Survey.
-    - Shows error code, a bulleted list of errors, and lfg_fail.png.  
+     - Modified from Survey.
+     - Shows error code, a bulleted list of errors, and lfg_fail.png.  
   15)layout.html  
-    - Modified from CS50 Finance.
-    - Contains main navbar, shows differently based on log in status.
-    - Contains "get flashed messages"  
-      + Shows a red alert flanked by lfg_fail.png for error messages.
-      + Shows a green alert flanked by lfg_success.png for success messages.  
+     - Modified from CS50 Finance.
+     - Contains main navbar, shows differently based on log in status.
+     - Contains "get flashed messages"  
+        + Shows a red alert flanked by lfg_fail.png for error messages.
+        + Shows a green alert flanked by lfg_success.png for success messages.  
   16)login.html  
-    - Modified from Finance.
-    - Shows lfg_logo.png, acts as homepage until user logs in.  
+     - Modified from Finance.
+     - Shows lfg_logo.png, acts as homepage until user logs in.  
   17)register.html  
-    - From CS50 Finance, allows user to create an account.
+     - From CS50 Finance, allows user to create an account.
 
 #### helpers.py:
   a)datetime_convert  
-    - Converts date timestamps to a more readable format.
+     - Converts date timestamps to a more readable format.
   b)login_required  
-    - From CS50 Finance.
-    - Makes sure user is logged in to access most pages/features.  
+     - From CS50 Finance.
+     - Makes sure user is logged in to access most pages/features.  
   c)time_convert  
-    - Converts time to 12 hour format with AM/PM.
+     - Converts time to 12 hour format with AM/PM.
